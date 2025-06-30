@@ -16,14 +16,16 @@ var maxProfit = function(prices) {
     // AFTER WRONG SUBMIT => failed at [2,4,1] output 3 expected 2
     // i shouldn't update keep after with a price after the selling price, hmmm
     // should i push the profit of (old-sell - old-keep) to an array, and then reset the sell and assign the new value to keep?
-
+    // AFTER FIRST SUBMISSION => there is no need for a profits ARRAY, we only want a maxProfit variable to reassign
     let keep = prices[0];
     let sell = -1;
-    let profits = [];
+    let maxProfit = null;
 
     for (let i = 1; i < prices.length; i++) {
         if (prices[i] < keep) {
-            if (sell !== -1) profits.push(sell - keep);
+            if (sell !== -1) {
+                maxProfit = Math.max(maxProfit, sell - keep);
+            }
             keep = prices[i];
             sell = -1;
         } else if (prices[i] > sell) {
@@ -32,10 +34,12 @@ var maxProfit = function(prices) {
     }
 
     // in case of only one profit there is
-    if (sell !== -1) profits.push(sell - keep);
+    if (sell !== -1) {
+        maxProfit = Math.max(maxProfit, sell - keep);
+    }
 
     // get the maximum profit after multiple keeps and sells
-    if (profits.length === 0) return 0; // no profit could be achieved
+    if (maxProfit === null) return 0; // no profit could be achieved
 
-    return Math.max(...profits);
+    return maxProfit;
 };
