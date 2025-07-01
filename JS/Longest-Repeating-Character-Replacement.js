@@ -48,9 +48,8 @@ var characterReplacement = function(s, k) {
     const cmap = createAlphabetCountMap();
     let maxS = k || 1; // if k = 0 and s is ABAB, we want to return 1 and not the default 0
     let l = 0;
-    let r = 1;
-    cmap.set(s[l], 1);
-    cmap.set(s[r], cmap.get(s[r])+1); // hanlde when first two letters are the same letter
+    let r = 0;
+    increaseCount(cmap, s[r]);
 
     while (r < s.length) {
         let diff = getHighestCountAndOthersSum(cmap);
@@ -61,7 +60,7 @@ var characterReplacement = function(s, k) {
             l = l + 1;
         }
         r = r + 1;
-        increaseCount(cmap, s[r]);
+        if (r < s.length) increaseCount(cmap, s[r]); // avoid getting undefined after r = r + 1
     }
 
     return maxS;
