@@ -4,6 +4,8 @@
  */
 var sortArray = function(nums) {
     // classic merge sort
+    // AFTER MERGE SORT SUBMIT -> we can reduce space use in merge() by passing the array and overwriting it instead
+    // of formulating a new result[]
     function mergeSort(arr) {
         if (arr.length <= 1) {
             return arr;
@@ -16,25 +18,37 @@ var sortArray = function(nums) {
         const sortedLeft = mergeSort(leftHalf);
         const sortedRight = mergeSort(rightHalf);
 
-        return merge(sortedLeft, sortedRight);
+        merge(sortedLeft, sortedRight, arr);
+        return arr;
     }
 
-    function merge(left, right) {
-        let result = [];
+    function merge(left, right, arr) {
         let leftIndex = 0;
         let rightIndex = 0;
+        let arrIndex = 0;
 
         while (leftIndex < left.length && rightIndex < right.length) {
             if (left[leftIndex] < right[rightIndex]) {
-                result.push(left[leftIndex]);
+                arr[arrIndex] = left[leftIndex];
                 leftIndex++;
             } else {
-                result.push(right[rightIndex]);
+                arr[arrIndex] = right[rightIndex];
                 rightIndex++;
             }
+            arrIndex++;
         }
 
-        return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+        while (leftIndex < left.length) {
+            arr[arrIndex] = left[leftIndex];
+            leftIndex++;
+            arrIndex++;
+        }
+
+        while (rightIndex < right.length) {
+            arr[arrIndex] = right[rightIndex];
+            rightIndex++;
+            arrIndex++;
+        }
     }
 
     return mergeSort(nums);
