@@ -25,29 +25,27 @@ var findLucky = function (arr) {
 
     // another appraoch would be counting, without using a freq array. 
     // since array element order doesn't count, we can just sort the array descendingly, move two pointers l and r
-    // and count the similar items and update max
+    // and count the similar items
     // AFTER WRONG SUBMIT: what a bad early return condition i have made :(
+    // AFTER CORRECT SUBMIT: we don't really need the count variable, we can derive it from r and l
     arr.sort((a, b) => b - a);
     let l = 0;
     let r = 1;
-    let count = 1;
 
     while (r < arr.length) {
         if (arr[r] !== arr[l]) {
-            if (count === arr[l]) {
-                return count; // we don't have to keep looking, this is lucky, and because of the sort, this is max
+            if (r - l === arr[l]) {
+                return r - l; // we don't have to keep looking, this is lucky, and because of the sort, this is max
             }
 
             l = r;
             count = 1;
-        } else {
-            count = count + 1;
         }
 
         r = r + 1;
     }
 
-    if (count === arr[l]) return count;
+    if (r - l === arr[l]) return r - l;
 
     return -1;
 };
