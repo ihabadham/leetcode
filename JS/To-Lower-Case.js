@@ -7,22 +7,17 @@ var toLowerCase = function (s) {
     // return s.toLowerCase();
 
     // ok fuck it let's do it
-    function convertCharAtIndex(str, index) {
-        const char = str[index];
+    let charArray = s.split('');
+
+    for (let i = 0; i < charArray.length; i++) {
+        const char = charArray[i];
         const charCode = char.charCodeAt(0);
 
         if (charCode >= 65 && charCode <= 90) {
             const lowercaseCharCode = charCode + 32;
-            const lowercaseChar = String.fromCharCode(lowercaseCharCode);
-            return str.substring(0, index) + lowercaseChar + str.substring(index + 1);
-        } else {
-            return str;
+            charArray[i] = String.fromCharCode(lowercaseCharCode);
         }
     }
 
-    for (let i = 0; i < s.length; i++) {
-        s = convertCharAtIndex(s, i);
-    }
-
-    return s;
+    return charArray.join('');
 };
