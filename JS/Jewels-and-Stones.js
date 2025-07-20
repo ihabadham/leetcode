@@ -4,14 +4,15 @@
  * @return {number}
  */
 var numJewelsInStones = function (jewels, stones) {
-    const lookupSet = new Set();
+    // boolean array to mark precense
+    const isJewel = new Array(128).fill(false);
     for (const stone of jewels) {
-        lookupSet.add(stone);
+        isJewel[stone.charCodeAt(0)] = true;
     }
 
     let count = 0;
     for (const stone of stones) {
-        if (lookupSet.has(stone)) {
+        if (isJewel[stone.charCodeAt(0)]) {
             count++;
         }
     }
